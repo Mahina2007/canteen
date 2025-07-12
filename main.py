@@ -1,4 +1,4 @@
-from auth import register, login
+from auth import *
 def main():
     print("""
     1. Register
@@ -15,7 +15,14 @@ def main():
                 print("something went wrong, try again")
                 register()
         elif choice == "2":
-            login()
+            result = login()
+            if result == "admin":
+                print("welcome my owner")
+                return admin_menu()
+            elif result == "user":
+                return user_menu()
+            else:
+                login()
         elif choice == "3":
             print("Good bye")
             return None
@@ -32,6 +39,27 @@ def user_menu():
         2. Show my today time
         3. Show all my history
         """)
+    try:
+        choice = input("Enter your choice: ")
+        if choice == "1":
+            pass
+        elif choice == "2":
+            pass
+        elif choice == "3":
+            pass
+        else:
+            print("Invalid choice")
+        return main()
+    except KeyboardInterrupt:
+        print("Good bye")
+        return None
+
+def admin_menu():
+    print("""
+            1. Get an order
+            2. Show all orders
+            3. Show all my history
+            """)
     try:
         choice = input("Enter your choice: ")
         if choice == "1":

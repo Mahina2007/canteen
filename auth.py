@@ -1,48 +1,70 @@
-import random
-from utils import send_email
-from file_manager import append, read
+from utils import get_random_code, send_mail
+from file_manager import *
+from utils import get_next_id
+from datetime import datetime
+
+admin_email = "a"
+admin_password = "a"
+
+def check_code():
+    user_code = input("Code: ")
+    codes = read(filename="codes")
+    email = None
+    for code in codes:
+        if code[1] == user_code:
+            email = code[0]
+            break
+
+    if email is None:
+        print("Invalid code")
+        return check_code()
+    else:
+        users = read(filename="users")
+        for index, user in enumerate(users):
+            if user[2] == email:
+                users[index][4] = True
+                writerows(filename="users", data=users)
+                return True
+    return False
+
 
 def register():
-    full_name = input("full name: ")
-    email1 = input("email: ")
-    password1 = input("password1: ")
-    password2 = input("password2: ")
+    full_name = input("Enter your full name: ")
+    email = input("Enter your email: ")
+    password1 = input("Enter your password: ")
+    password2 = input("Confirm your password: ")
 
     while password1 != password2:
-        print("incorrect password")
-        password1 = input("password1: ")
-        password2 = input("password2: ")
+        print("Does not match")
+        password1 = input("Enter your password: ")
+        password2 = input("Confirm your password: ")
 
-    random_num = random.randint(1000, 10000)
-    send_email(receiver_email=email1, body = str(random_num))
-    append(filename = "users", data=[full_name, email1, password1, False])
-    append(filename = "codes", data=[email1, random_num])
-    return check_otp(random_num)
+    next_id = get_next_id(filename="users")
+    data = [next_id, full_name, email, password2, False, False, datetime.now()]
+    append(filename="users", data=data)
+    random_code = get_random_code(email=email)
+    send_mail(receiver_email=email, body=str(random_code))
+    return check_code()
 
-def check_otp(correct_code):
-    code = input("enter the code: ")
-    if code == str(correct_code):
-        return True
-    else:
-        return False
 
 def login():
-    email2 = input("email: ").strip()
-    password = input("password: ").strip()
-
-    users = read("users.csv")
-    for user in users:
-        full_name, email1, password1, is_verified = [field.strip() for field in user]
-
-        print(f"Checking: {email1=} {password1=} {is_verified=}")
-
-        if email1.lower() == email2.lower() and password1 == password:
-            if is_verified == "True":
-                print(f"Welcome back, {full_name}!")
-                return True
-            else:
-                print("Account not verified")
-                return False
-
-    print("Incorrect email or password")
+    email = input("Enter your email: ")
+    password = input("Enter your password: ")
+    if email == admin_email and password == admin_password:
+        return "admin"
+    users = read(filename="users")
+    for index, user in enumerate(users):
+        if user[2] == email and user[3] == password:
+            users[index][-2] = True
+            writerows(filename="users", data=users)
+            return "user"
+    print("Invalid username or password")
     return False
+
+def logout_all():
+    users = read(filename="users")
+    for index, user in enumerate(users):
+        users[index][-2] = False
+    writerows(filename="users", data=users)
+    return
+# admin- manager, qabul/otmen
