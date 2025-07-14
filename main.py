@@ -1,4 +1,4 @@
-from auth import *
+from apps.auth.auth import *
 def main():
     print("""
     1. Register

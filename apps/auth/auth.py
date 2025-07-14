@@ -1,10 +1,12 @@
-from utils import get_random_code, send_mail
-from file_manager import *
-from utils import get_next_id
 from datetime import datetime
+
+from apps.auth.utils import get_random_code, send_mail
+from core.file_manager import append, read, writerows
+from core.utils import get_next_id
 
 admin_email = "a"
 admin_password = "a"
+
 
 def check_code():
     user_code = input("Code: ")
@@ -35,7 +37,7 @@ def register():
     password2 = input("Confirm your password: ")
 
     while password1 != password2:
-        print("Does not match")
+        print("Doesnt not match")
         password1 = input("Enter your password: ")
         password2 = input("Confirm your password: ")
 
@@ -61,10 +63,9 @@ def login():
     print("Invalid username or password")
     return False
 
-def logout_all():
+
+def logout():
     users = read(filename="users")
     for index, user in enumerate(users):
         users[index][-2] = False
     writerows(filename="users", data=users)
-    return
-# admin- manager, qabul/otmen

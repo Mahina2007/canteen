@@ -2,7 +2,7 @@ import random
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from file_manager import *
+from core.file_manager import *
 
 
 def get_random_code(email: str):

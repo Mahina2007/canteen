@@ -9,7 +9,7 @@ def writerows(filename: str, data: list[list]) -> None:
     :param data: list of data
     :return: None
     """
-    path = f"data/{filename}.csv"
+    path = f"core/data/{filename}.csv"
     with open(file=path, mode="w", encoding="UTF-8", newline="") as file:
         writer = csv.writer(file)
         writer.writerows(data)
@@ -21,7 +21,7 @@ def read(filename: str) -> list:
     :param filename: file name
     :return: list of data
     """
-    path = f"data/{filename}.csv"
+    path = f"core/data/{filename}.csv"
     if os.path.exists(path=path):
         with open(file=path, mode="r", encoding="UTF-8", newline="") as file:
             reader = csv.reader(file)
@@ -36,7 +36,7 @@ def append(filename: str, data: list) -> None:
     :param data: list of data
     :return: None
     """
-    path = f"data/{filename}.csv"
+    path = f"core/data/{filename}.csv"
     with open(file=path, mode="a", encoding="UTF-8", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(data)
