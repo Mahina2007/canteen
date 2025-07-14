@@ -1,4 +1,5 @@
 from apps.auth.auth import *
+from classes.admin import *
 def main():
     print("""
     1. Register
@@ -41,8 +42,9 @@ def user_menu():
         """)
     try:
         choice = input("Enter your choice: ")
+        user = User(username="username")
         if choice == "1":
-            pass
+            user.order(order_time="order_time", system=system)
         elif choice == "2":
             pass
         elif choice == "3":
@@ -75,5 +77,17 @@ def admin_menu():
         print("Good bye")
         return None
 
+# system = System(max_orders=2)
+#
+# # Foydalanuvchilar
+# user1 = User("Ali")
+# user2 = User("Vali")
+#
+# # Zakaz vaqtlarini belgilash
+# time1 = datetime.now().replace(minute=0, second=0, microsecond=0) + timedelta(hours=1)
+#
+# # Foydalanuvchilar zakaz qilishmoqda
+# user1.order(time1, system)
+# user2.order(time1, system)
 if __name__ == "__main__":
     main()

@@ -11,7 +11,11 @@ def get_ticket():
     """
     time = input("what time would you like to have a lunch? Choose from 11 am to 3 pm: ")
     seats = int(input("how many seats do you want to book: "))
+    times = read("time")
 
+    for t in times:
+        if t[-1] != seats:
+            print("Seats for this time are not available, please choose another time")
 
 
 
