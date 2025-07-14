@@ -28,7 +28,7 @@ class User:
                 "order_time": order_time,
             }
             with open('orders.json', 'w') as file:
-                json.dump(data, file, indent=4)
+                json.dump(order, file, indent=4)
                 print(f"{self.username}, zakaz soat {order_time}da qabul qilindi")
         else:
             print(f"uzr {self.username}, bo'sh joy yo'q")
@@ -101,9 +101,10 @@ admin = Admin("kimdir")
 
 # # Zakaz vaqtlarini belgilash
 time1 = datetime.now().replace(second=0, microsecond=0) + timedelta(hours=1)
+print(time1)
 
 # Foydalanuvchilar zakaz qilishmoqda
-user1.order(time1, system)
+# user1.order(time1, system)
 # user2.order(time1, system)
 # user1.order(time1, system)
 # user1_order = user1.orders[0]
